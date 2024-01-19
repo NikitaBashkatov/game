@@ -1,27 +1,30 @@
+package ru.vsu.cs.oop23.bashkatov_n_m.task2;
+
 import java.util.Scanner;
 
 public class Field {
-    static Scanner scanner;
-     char [][] map;
+
+       int[][] map;
+       int g = X_FIELD & O_FIELD;
      int getSize() {
         return size;
     }
     final int size;
-    static final char EMPTY_FIELD = '*';
-    static final char X_FIELD = 'X';
-    static final char O_FIELD = 'O';
+    static final int EMPTY_FIELD = 0;
+    static final int X_FIELD = 1;
+    static final int O_FIELD = 2;
+    //static final char dot = O_FIELD & X_FIELD;
     public Field(int s) {
         this.size = s;
     }
 
         public void init () {
-            map = new char [getSize()] [getSize()];
+            map = new int[getSize()][getSize()];
             for (int i = 0; i < getSize(); i++) {
                 for (int j = 0; j < getSize(); j++) {
                     map[i][j] = EMPTY_FIELD;
                 }
             }
-            scanner = new Scanner(System.in);
         }
         public boolean isCellValid(int x, int y){    //проверяет можно ли ходить в клетку
             if (x < 0 || y < 0 || x >= getSize() || y >= getSize()){
@@ -33,7 +36,15 @@ public class Field {
             return true;
         }
 
-        public void printMap(){
+    public int get(int x,int y) {
+        return map[y][x];
+    }
+    public void set(int x,int y,int v) {
+        map[y][x] = v;
+    }
+
+
+    public void printMap(char empty, char[] players){
             for (int i = 0; i <= getSize(); i++) {
                 System.out.print(i + " ");
             }
@@ -41,7 +52,14 @@ public class Field {
             for (int i = 0; i < getSize(); i++) {
                 System.out.print((i + 1) + " ");
                 for (int j = 0; j < getSize(); j++){
-                    System.out.print(map[i][j] + " ");
+                    //players[0]
+                    if (map[i][j] == 0){
+                        System.out.print(empty);
+                    } else {
+                        int n = map[i][j];
+                        System.out.print(players[n-1]);
+                    }
+                    System.out.print( " ");
                 }
                 System.out.println();
             }
